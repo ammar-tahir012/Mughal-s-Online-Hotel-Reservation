@@ -1,0 +1,91 @@
+<% layout('layout/boilerplate.ejs') -%>
+<body>
+  <h3 class="hadd">Edit a Listing</h3>
+  <form
+    class="addform"
+    action="/listings/<%=hotel._id%>?_method=PATCH"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="mb-3">
+      <label class="form-label" for="title">Title</label>
+      <input
+        required
+        novalidate
+        class="form-control"
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Add a catchy title"
+        value="<%=hotel.title  %>"
+      />
+    </div>
+    <br />
+    <div class="mb-3">
+      <label class="form-label" for="price">Price</label>
+      <input
+        required
+        novalidate
+        class="form-control"
+        type="number"
+        name="price"
+        id="price"
+        placeholder="1000-2000"
+        value="<%=hotel.price  %>"
+      />
+    </div>
+    <br />
+    <div class="mb-3">
+      <label class="form-label" for="description">Description</label>
+      <textarea
+        required
+        novalidate
+        class="form-control"
+        name="description"
+        id="description"
+        placeholder="Add a Description"
+      >
+<%=hotel.description  %></textarea
+      >
+    </div>
+    <div class="mb-3">
+      <b>Original Listing Image</b> <br />
+      <img src="<%=originalImageUrl%>" alt="Some Hotel Image" />
+    </div>
+    <br />
+    <div class="mb-3">
+      <label class="form-label" for="image">Upload Listing Image</label>
+      <input class="form-control" type="file" name="image" id="image" />
+    </div>
+    <br />
+    <div class="mb-3">
+      <label class="form-label" for="country">Country</label>
+      <input
+        required
+        novalidate
+        class="form-control"
+        type="text"
+        name="country"
+        id="country"
+        placeholder="e.g Pakistan"
+        value="<%=hotel.country  %>"
+      />
+    </div>
+    <br />
+    <div class="mb-3">
+      <label class="form-label" for="location">Location</label>
+      <input
+        required
+        novalidate
+        class="form-control"
+        type="text"
+        name="location"
+        id="location"
+        placeholder="e.g Rawalpindi"
+        value="<%=hotel.location%>"
+      />
+    </div>
+    <br />
+    <button class="btn btn-dark viewbtn" type="submit">Submit</button>
+  </form>
+</body>

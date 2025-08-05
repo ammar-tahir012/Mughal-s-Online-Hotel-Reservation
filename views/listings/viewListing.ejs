@@ -1,0 +1,133 @@
+<% layout('layout/boilerplate.ejs') -%>
+<script>
+  let mapToken = "<%=process.env.MAP_TOKEN %>";
+  let myHotel = <%- JSON.stringify(hotel) %>;
+</script>
+
+<body>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="container" style="max-width: 600px">
+      <div class="card listing-card">
+        <img
+          src="<%=hotel.image.url%>"
+          class="card-img-top bigimg"
+          alt="Hotel Image"
+        />
+        <%=console.log(hotel.image.url)%>
+        <div class="card-body">
+          <p class="card-text">created by <i><%=hotel.owner.username%></i></p>
+          <h2 class="card-title"><%=hotel.title%></h2>
+          <p class="card-text"><%=hotel.description%></p>
+          <p class="card-text"><b>Price :</b>&nbsp;<%=hotel.price%></p>
+          <p class="card-text"><b>Country :</b>&nbsp;<%=hotel.country%></p>
+          <p class="card-text"><b>Location :</b>&nbsp;<%=hotel.location%></p>
+          <% if (currUser && hotel.owner._id.equals(currUser._id)){ %>
+          <a href="/listings/<%=hotel._id%>/edit" class="btn btn-dark viewbtn"
+            >Edit Hotel</a
+          >
+          <br /><br />
+          <form action="/listings/<%=hotel._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-dark viewbtn" type="submit">
+              Delete Hotel
+            </button>
+          </form>
+          <%}%>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+
+  <br /><br />
+  <% if(currUser){%>
+  <hr />
+  <form
+    action="/listings/<%=hotel._id%>/reviews"
+    method="post"
+    class="addform needs-validation"
+    novalidate
+  >
+    <div class="card-body">
+      <h2 class="card-title">Leave a review</h2>
+    </div>
+    <div class="mb-3 mt-2">
+      <label for="review[rating]" class="form-label"><b>Rating</b></label>
+      <fieldset class="starability-slot">
+        <input
+          type="radio"
+          id="no-rate"
+          class="input-no-rate"
+          name="review[rating]"
+          value="1"
+          checked
+          aria-label="No rating."
+        />
+        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="comment"><b>Comment</b></label>
+      <textarea
+        required
+        class="form-control"
+        name="review[comment]"
+        id="comment"
+        cols="20"
+        rows="5"
+      ></textarea>
+      <div class="invalid-feedback">Please enter some valid comment</div>
+    </div>
+
+    <br />
+    <button class="btn btn-dark viewbtn" type="submit">Submit</button>
+  </form>
+  <%}%>
+  <br />
+  <% if(hotel.reviews.length >0){ %>
+
+  <hr />
+  <br />
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="container" style="max-width: 600px">
+      <h2 class="card-title"><b>Reviews</b></h2>
+      <br />
+      <%for (review of hotel.reviews){%>
+      <div class="card review-card mb-2">
+        <div class="card-body">
+          <h2 class="card-title">@<%=review.author.username%></h2>
+          <p
+            class="starability-result card-text"
+            data-rating="<%=review.rating%>"
+          ></p>
+          <p class="card-text"><%=review.comment%></p>
+          <form
+            action="/listings/<%=hotel._id%>/reviews/<%=review._id%>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-dark viewbtn" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </div>
+  <% }%>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="container" style="max-width: 600px">
+      <div col-8 offset-6>
+        <h3>Where You Will be ..</h3>
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+  <script src="/JavaScript/maps.js"></script>
+</body>

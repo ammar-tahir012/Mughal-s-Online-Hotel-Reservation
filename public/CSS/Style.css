@@ -1,0 +1,142 @@
+.navbar {
+  background-color: black !important;
+  margin-bottom: 2px;
+  border-bottom: 2px solid white;
+  padding: 20px;
+  color: whitesmoke !important;
+}
+.nav-link,
+.navbar-brand {
+  font-weight: 500;
+  color: whitesmoke !important;
+  padding-right: 40px;
+}
+
+.nav-link:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transition: transform 0.2s ease;
+  transform: scale(1.05);
+}
+body {
+  background-color: beige;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.social {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+.fb,
+.x,
+.insta {
+  padding-right: 3%;
+  color: black;
+}
+
+.footer {
+  border-top: 2px solid black !important;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  margin-top: 3%;
+}
+.footemail {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.listing-card {
+  border: none !important;
+  margin-bottom: 2%;
+  background-color: beige;
+}
+.maincardimg {
+  border-radius: 4%;
+  height: 60% !important;
+}
+
+.clickanchor {
+  text-decoration: none;
+  color: inherit;
+}
+
+.viewbtn:hover {
+  background-color: white;
+  color: black;
+  font-weight: 700;
+}
+
+.card:hover {
+  transition: transform 0.2s ease-in;
+  /* transform: scale(1.03);*/
+}
+
+.bigimg {
+  height: 20% !important;
+  width: 60% !important;
+}
+
+.addform {
+  margin-left: 30%;
+}
+
+.form-control {
+  width: 50%;
+}
+
+.hadd {
+  margin-left: 30%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+/* Change color of range slider for all browsers to black*/
+.range-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 30vw; /* 30% of viewport width */
+  height: 6px;
+  background: white; /* Make track black */
+  border-radius: 3px;
+  outline: none;
+}
+
+/* Chrome & Safari */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: black; /* black thumb for contrast */
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+/* IE / Edge */
+input[type="range"]::-ms-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid white;
+}
+.review-card {
+  border: 2px solid whitesmoke;
+  border-radius: 5%;
+}
+#map {
+  width: 80vh;
+  height: 400px;
+}

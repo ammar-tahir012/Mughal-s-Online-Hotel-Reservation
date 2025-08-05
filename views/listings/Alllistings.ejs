@@ -1,0 +1,37 @@
+<% layout('layout/boilerplate.ejs') -%>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <%for (hotel of hotels){%>
+
+      <div
+        onclick="location.href='/listings/<%=hotel._id%>/viewlisting'"
+        style="cursor: pointer"
+        class="card listing-card col-md-6 col-lg-4 col-xl-3"
+        style="width: 20rem"
+      >
+        <img
+          src="<%=hotel.image.url%>"
+          class="card-img-top maincardimg"
+          alt="Hotel Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%=hotel.title%></h5>
+          <p class="card-text">
+            <b>Price :</b> &nbsp;<%=hotel.price%> &#8360; /night
+          </p>
+          <a
+            href="/listings/<%=hotel._id%>/viewlisting"
+            class="btn btn-dark viewbtn"
+            >View Hotel</a
+          >
+        </div>
+      </div>
+
+      <br />
+
+      <% }%>
+    </div>
+  </div>
+</body>
