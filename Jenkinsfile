@@ -2,63 +2,67 @@ pipeline {
     agent any
     
     environment {
-        COMPOSE_FILE = 'docker-compose-jenkins.yml'
+        DOCKER_IMAGE = 'hotel-app'
+        CONTAINER_NAME = 'hotel-app-container'
     }
     
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo 'Fetching code from GitHub...'
-                checkout scm
+                git branch: 'main', url: 'https://github.com/ammar-tahir012/Mughal-s-Online-Hotel-Reservation.git'
             }
         }
         
-        stage('Stop Previous Containers') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Stopping any existing containers...'
-                sh '''
-                    docker compose -f ${COMPOSE_FILE} down || true
-                '''
+                script {
+                    docker.build("${DOCKER_IMAGE}")
+                }
             }
         }
         
-        stage('Build and Deploy') {
+        stage('Stop Previous Container') {
             steps {
-                echo 'Starting application containers...'
-                sh '''
-                    docker compose -f ${COMPOSE_FILE} up -d --build
-                '''
+                script {
+                    sh 'docker stop ${CONTAINER_NAME} || true'
+                    sh 'docker rm ${CONTAINER_NAME} || true'
+                }
+            }
+        }
+        
+        stage('Run New Container') {
+            steps {
+                script {
+                    docker.run(
+                        "--name ${CONTAINER_NAME} -d -p 3001:3000 --env-file .env ${DOCKER_IMAGE}"
+                    )
+                }
             }
         }
         
         stage('Verify Deployment') {
             steps {
-                echo 'Verifying deployment...'
-                sh '''
-                    echo "Waiting for application to start..."
-                    sleep 15
-                    docker ps
-                    echo "Checking if app is responding..."
-                    curl -f http://localhost:3001 || echo "Application starting..."
-                '''
-            }
-        }
-        
-        stage('Show Logs') {
-            steps {
-                echo 'Application logs:'
-                sh 'docker compose -f ${COMPOSE_FILE} logs --tail=50 app-jenkins'
+                script {
+                    sleep 10
+                    sh 'curl -f http://localhost:3001 || exit 1'
+                }
             }
         }
     }
     
     post {
+        always {
+            echo 'Pipeline completed - cleaning up workspace'
+            cleanWs()
+        }
         success {
-            echo 'Deployment successful!'
+            echo 'Deployment successful! Hotel app is running.'
         }
         failure {
-            echo 'Deployment failed! Check logs above.'
-            sh 'docker compose -f ${COMPOSE_FILE} logs'
+            echo 'Deployment failed. Check logs above.'
         }
     }
 }
+  
+           
+  
