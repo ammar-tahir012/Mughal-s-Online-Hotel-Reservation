@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app-jenkins:
+    image: node:18-alpine
+    container_name: hotel-app-jenkins
+    working_dir: /app
+    restart: always
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./:/app
+    command: sh -c "npm install && node index.js"
+    environment:
+      ATLAS_DB_URL: ${ATLAS_DB_URL}
+      CLOUD_NAME: ${CLOUD_NAME}
+      CLOUD_API_KEY: ${CLOUD_API_KEY}
+      CLOUD_API_SECRET: ${CLOUD_API_SECRET}
+      MAP_TOKEN: ${MAP_TOKEN}
+      SECRET: ${SECRET}
